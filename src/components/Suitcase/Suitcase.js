@@ -5,7 +5,7 @@ import './Suitcase.css';
 const Suitcase = (props) => {
   return (
     <div className='suitcase'>
-      Suitcase
+      {props.value}
     </div>
   )
 }
