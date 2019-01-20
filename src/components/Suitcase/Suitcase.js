@@ -5,7 +5,10 @@ import './Suitcase.css';
 const Suitcase = (props) => {
   return (
     <div className='suitcase'>
-      {props.value}
+      Number = {props.number}
+      <div>
+        Money = {props.money}
+      </div>
     </div>
   )
 }
