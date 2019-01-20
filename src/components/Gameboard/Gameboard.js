@@ -72,25 +72,33 @@ export default class Gameboard extends Component {
       valueArray[randomIndex] = temporaryValue;
     }
 
-    console.log(valueArray);
-
     return valueArray
   }
   
 
   render() {
     const mappedSuitcases = this.state.suitcases.map( (suitcase, index) => {
-    console.log(suitcase)
-    return <Suitcase
+      return <Suitcase
               number={suitcase.number}
               key={suitcase.number.toString()}
               money={suitcase.money}
             />
     })
 
+    const mappedMoneyValues = this.state.moneySlots.map( (moneyValues, index) => {
+      return <div className='money-slot' key={index}>
+                {moneyValues}
+              </div>
+    })
+
     return (
       <div className='game-board'>
-        {mappedSuitcases}
+        <div className='suitcase-container'>
+          {mappedSuitcases}
+        </div>
+        <div className='money-slot-container'>
+          {mappedMoneyValues}
+        </div>
       </div>
     )
   }
