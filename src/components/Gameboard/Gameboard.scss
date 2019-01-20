@@ -3,3 +3,17 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+.money-slot-container {
+
+}
+
+.suitcase-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.money-slot {
+  background-color: yellow;
+  border: 1px solid black;
+}
