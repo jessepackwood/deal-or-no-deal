@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Suitcase from '../Suitcase/Suitcase';
 import MoneySlot from '../MoneySlot/MoneySlot';
-import NumberFormat from 'react-number-format-presuffix';
 import BankerOffer from '../BankerOffer/BankerOffer';
 import './Gameboard.css';
 
@@ -31,10 +30,6 @@ export default class Gameboard extends Component {
   updateSuitcaseNumbers(remainingCases) {
     this.setState({suitcases: remainingCases});
   };
-
-  changeMoneySlotColor = (removedSlot) => {
-    let slotToChange = this.state.moneySlots.filter( moneySlot => moneySlot === removedSlot[0]);
-  }
 
   updateMoneySlots(removedSlot) {
     if(!!this.state.userSuitcase.length) {
@@ -162,13 +157,6 @@ export default class Gameboard extends Component {
                 money={suitcase.money}
               />
     })
-
-    const bankerOffer = () => {
-      let cases = this.state.moneySlots.length;
-      if(cases === 19 || cases === 15 || cases === 11 || cases === 8 || cases === 6 || cases === 5 || cases === 4 || cases === 3 || cases === 2) {
-        this.generateBankerOffer(cases)
-      }
-  }
 
     return (
       <div className='game-board'>

@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Suitcase from '../Suitcase/Suitcase';
 import NumberFormat from 'react-number-format-presuffix';
 import './MoneySlot.css';
 
@@ -11,5 +10,9 @@ const MoneySlot = (props) => {
     </div>
   )
 }
+
+MoneySlot.propTypes = {
+  className: PropTypes.string
+};
 
 export default MoneySlot;

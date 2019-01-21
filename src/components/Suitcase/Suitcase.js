@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './Suitcase.css';
 import NumberFormat from 'react-number-format-presuffix';
@@ -16,5 +16,9 @@ const Suitcase = (props) => {
     </div>
   )
 }
+
+Suitcase.propTypes = {
+  removeSuitcase: PropTypes.func
+};
 
 export default Suitcase;
