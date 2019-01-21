@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Suitcase from '../Suitcase/Suitcase';
+import NumberFormat from 'react-number-format-presuffix';
 import './Gameboard.css';
 
 const MoneyValues = [.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000, 10000, 25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000, 750000, 1000000];
@@ -28,11 +29,22 @@ export default class Gameboard extends Component {
   }
 
   updateSuitcaseNumbers(remainingCases) {
+    console.log(remainingCases)
     this.setState({suitcases: remainingCases})
   }
 
   updateSuitcaseMoney(remainingMoney) {
     this.setState({moneySlots: remainingMoney})
+  }
+
+  removeSuitcase = (openedSuitcase) => {
+    console.log(openedSuitcase)
+    //filter to return every suitcase that does not match the suitcase passed in
+    let remainingCases = this.state.suitcases.filter( suitcase => {
+      return suitcase.number !== openedSuitcase;
+    })
+    console.log(remainingCases)
+    this.updateSuitcaseNumbers(remainingCases)
   }
 
   buildSuitcases = () => {
@@ -51,7 +63,6 @@ export default class Gameboard extends Component {
     
     return builtSuitcases
   }
-
 
   shuffleMoney() {
     let valueArray = MoneyValues.slice(); //Make a copy to preserve origin of truth
@@ -78,16 +89,18 @@ export default class Gameboard extends Component {
 
   render() {
     const mappedSuitcases = this.state.suitcases.map( (suitcase, index) => {
+      console.log(suitcase)
       return <Suitcase
-              number={suitcase.number}
-              key={suitcase.number.toString()}
-              money={suitcase.money}
-            />
+                number={suitcase.number}
+                key={suitcase.number.toString()}
+                money={suitcase.money}
+                removeSuitcase={this.removeSuitcase}
+              />
     })
 
     const mappedMoneyValues = this.state.moneySlots.map( (moneyValues, index) => {
       return <div className='money-slot' key={index}>
-                {moneyValues}
+                <NumberFormat value={moneyValues} displayType={'text'} thousandSeparator={true} prefix={'$'} />
               </div>
     })
 
