@@ -7,7 +7,7 @@ const Suitcase = (props) => {
   return (
     <div 
       className = 'suitcase'
-      onClick = { () => props.removeSuitcase(props.number) }
+      onClick = { () => props.removeSuitcase(props) }
     >
       Number = {props.number}
       <div>
