@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Suitcase from '../Suitcase/Suitcase';
 import MoneySlot from '../MoneySlot/MoneySlot';
 import NumberFormat from 'react-number-format-presuffix';
+import BankerOffer from '../BankerOffer/BankerOffer';
 import './Gameboard.css';
 
 const MoneyValues = [.01, 1, 5, 10, 25, 50, 75, 100, 200, 300, 400, 500, 750, 1000, 5000, 10000, 25000, 50000, 75000, 100000, 200000, 300000, 400000, 500000, 750000, 1000000];
@@ -17,11 +18,13 @@ export default class Gameboard extends Component {
       suitcases: suitcases,
       // moneySlots here in state will be the values you list next to the board. Don't shuffle these
       moneySlots: MoneyValues.slice(),
-      userSuitcase: []
+      userSuitcase: [],
+      removedSlots: []
     }
   };
 
   addUserSuitcase = (userSuitcase) => {
+    console.log(userSuitcase)
     this.setState({userSuitcase: [userSuitcase]});
   };
 
@@ -30,24 +33,26 @@ export default class Gameboard extends Component {
   };
 
   changeMoneySlotColor = (removedSlot) => {
-    console.log(removedSlot[0])
     let slotToChange = this.state.moneySlots.filter( moneySlot => moneySlot === removedSlot[0]);
   }
 
-  /*updateMoneySlots(remainingMoney) {
-    console.log(remainingMoney)
-    this.setState({moneySlots: remainingMoney})
-  }*/
+  updateMoneySlots(removedSlot) {
+    if(!!this.state.userSuitcase.length) {
+      this.state.removedSlots.push(removedSlot[0]);
+    }
+  }
 
   removeSuitcase = (openedSuitcase) => {
-    console.log(openedSuitcase)
     //filter to return every suitcase that does not match the suitcase passed in
+      this.checkAllSuitcases();
+
       let remainingCases = this.filterSuitcases(openedSuitcase);
       let removedSlot = this.state.moneySlots.filter( moneySlot => {
         return moneySlot === openedSuitcase.money;
       })
+
       this.updateSuitcaseNumbers(remainingCases);
-      this.changeMoneySlotColor(removedSlot);
+      this.updateMoneySlots(removedSlot);
   }
 
   filterSuitcases = (pickedSuitcase) => {
@@ -57,8 +62,8 @@ export default class Gameboard extends Component {
     return gameCases;
   };
 
-  checkSuitcases = (pickedSuitcase) => {
-    if(this.state.suitcases.length == 26) {
+  checkUserSuitcase = (pickedSuitcase) => {
+    if(this.state.suitcases.length === 26) {
       this.addUserSuitcase(pickedSuitcase);
       this.setState({suitcases: [this.filterSuitcases(pickedSuitcase)]}); 
       }
@@ -103,6 +108,25 @@ export default class Gameboard extends Component {
 
     return valueArray
   };
+
+  generateBankerOffer = (caseValues) => {
+    let offer = (array) => array.reduce((a, b) => a + b) / array.length;
+    console.log(Math.round(offer(caseValues)));
+  }
+
+  checkAllSuitcases = () => {
+    let cases = this.state.suitcases.length;
+    console.log(cases)
+    if(cases === 19 || cases === 15 || cases === 11 || cases === 8 || cases === 6 || cases === 5 || cases === 4 || cases === 3 || cases === 2) {
+      
+      let caseValues = [];
+
+      this.state.suitcases.forEach( suitcase => caseValues.push(suitcase.money));
+      this.generateBankerOffer(caseValues)
+    } else {
+      return true;
+    }
+  }
   
 
   render() {
@@ -111,16 +135,24 @@ export default class Gameboard extends Component {
                 number={suitcase.number}
                 key={suitcase.number.toString()}
                 money={suitcase.money}
-                removeSuitcase={this.checkSuitcases}
+                removeSuitcase={this.checkUserSuitcase}
               />
     })
 
     const mappedMoneyValues = this.state.moneySlots.map( (moneyValues, index) => {
-      return <MoneySlot
-                key={index} 
-                money={moneyValues} 
-                changeColor={this.changeMoneySlotColor}
-              />
+      if(!this.state.removedSlots.includes(moneyValues)) {
+          return <MoneySlot
+                    className='money-slot'
+                    key={index} 
+                    money={moneyValues} 
+                  />
+      } else {
+        return <MoneySlot
+                  className='inactive'
+                  key={index}
+                  money={moneyValues}
+                />
+        }
     })
 
     const userSuitcase = this.state.userSuitcase.map( (suitcase, index) => {
@@ -130,6 +162,13 @@ export default class Gameboard extends Component {
                 money={suitcase.money}
               />
     })
+
+    const bankerOffer = () => {
+      let cases = this.state.moneySlots.length;
+      if(cases === 19 || cases === 15 || cases === 11 || cases === 8 || cases === 6 || cases === 5 || cases === 4 || cases === 3 || cases === 2) {
+        this.generateBankerOffer(cases)
+      }
+  }
 
     return (
       <div className='game-board'>
