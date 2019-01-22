@@ -18,7 +18,8 @@ export default class Gameboard extends Component {
       // moneySlots here in state will be the values you list next to the board. Don't shuffle these
       moneySlots: MoneyValues.slice(),
       userSuitcase: [],
-      removedSlots: []
+      removedSlots: [],
+      bankerOffer: null
     }
   };
 
@@ -42,6 +43,7 @@ export default class Gameboard extends Component {
       this.checkAllSuitcases();
 
       let remainingCases = this.filterSuitcases(openedSuitcase);
+
       let removedSlot = this.state.moneySlots.filter( moneySlot => {
         return moneySlot === openedSuitcase.money;
       })
@@ -106,7 +108,9 @@ export default class Gameboard extends Component {
 
   generateBankerOffer = (caseValues) => {
     let offer = (array) => array.reduce((a, b) => a + b) / array.length;
-    console.log(Math.round(offer(caseValues)));
+    let bankerOffer =  Math.round(offer(caseValues));
+    console.log(bankerOffer)
+    this.setState({bankerOffer});
   }
 
   checkAllSuitcases = () => {
@@ -125,6 +129,7 @@ export default class Gameboard extends Component {
   
 
   render() {
+
     const mappedSuitcases = this.state.suitcases.map( (suitcase, index) => {
       return <Suitcase
                 number={suitcase.number}
@@ -136,11 +141,11 @@ export default class Gameboard extends Component {
 
     const mappedMoneyValues = this.state.moneySlots.map( (moneyValues, index) => {
       if(!this.state.removedSlots.includes(moneyValues)) {
-          return <MoneySlot
-                    className='money-slot'
-                    key={index} 
-                    money={moneyValues} 
-                  />
+        return <MoneySlot
+                  className='money-slot'
+                  key={index} 
+                  money={moneyValues} 
+                />
       } else {
         return <MoneySlot
                   className='inactive'
@@ -156,10 +161,13 @@ export default class Gameboard extends Component {
                 key={index}
                 money={suitcase.money}
               />
-    })
+    });
 
     return (
       <div className='game-board'>
+        <div className='offer-container'>
+          {this.state.bankerOffer}
+        </div>
         <div className='suitcase-container'>
           {mappedSuitcases}
         </div>
@@ -177,5 +185,7 @@ export default class Gameboard extends Component {
 
 Gameboard.propTypes = {
   value: PropTypes.number,
-  money: PropTypes.number,
+  money: PropTypes.number
 }
+
+
