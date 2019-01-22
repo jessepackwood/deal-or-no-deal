@@ -1,9 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import Suitcase from '../Suitcase/Suitcase';
+import NumberFormat from 'react-number-format-presuffix';
+import './MoneySlot.css';
 
-export default class MoneySlots extends Component {
-  constructor() {
-    super();
-  }
+const MoneySlot = (props) => {
+  return (
+    <div className={props.className}>
+      <NumberFormat value={props.money} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+    </div>
+  )
 }
+
+MoneySlot.propTypes = {
+  className: PropTypes.string
+};
+
+export default MoneySlot;
