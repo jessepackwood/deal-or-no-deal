@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 
 
-export default class StartScreen extends Component {
-  constructor() {
-    super();
+const StartScreen = ({startGameplay}) => {
 
-    this.state = {
-      begin: true
-    }
-  }
-
-  render() {
-    return(
-      <div className='start-screen'>
-      </div>
-    )
-  }
+  return(
+    <div className='start-screen'>
+      <h3>Start Screen </h3>
+      <button 
+        onClick={startGameplay}
+      >
+      Begin
+      </button>
+    </div>
+  )
 }
+
+export default StartScreen;
