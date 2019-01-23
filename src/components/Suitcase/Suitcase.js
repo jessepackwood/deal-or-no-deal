@@ -9,10 +9,7 @@ const Suitcase = (props) => {
       className = 'suitcase'
       onClick = { () => props.removeSuitcase(props) }
     >
-      Number = {props.number}
-      <div>
-        Money = <NumberFormat value={props.money} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-      </div>
+      <span className='suitcase-number'>{props.number}</span>
     </div>
   )
 }
