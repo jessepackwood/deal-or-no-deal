@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-
+import './StartScreen.css';
 
 const StartScreen = ({startGameplay}) => {
 
   return(
     <div className='start-screen'>
-      <h3>Start Screen </h3>
       <button 
+        className='btn-start'
         onClick={startGameplay}
       >
       Begin
