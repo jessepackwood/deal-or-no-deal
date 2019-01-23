@@ -1,6 +1,9 @@
-.game-board {
+
+
+section {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .money-slot-container {
@@ -12,7 +15,16 @@
   flex-wrap: wrap;
 }
 
+.user-suitcase {
+  display: inline-block;
+  width: 205px;
+  height: 160px;
+}
+
 .user-suitcase-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   & h3 {
     color: #fff;
   }

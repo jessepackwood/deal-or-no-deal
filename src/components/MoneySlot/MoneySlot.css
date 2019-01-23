@@ -1,6 +1,7 @@
 .money-slot {
+  width: 120px;
   background-color: yellow;
-  border: 1px solid black; }
+  border: 2px solid black; }
 
 .inactive {
   color: lightgrey;

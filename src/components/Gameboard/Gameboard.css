@@ -1,10 +1,20 @@
-.game-board {
+section {
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  align-items: center; }
 
 .suitcase-container {
   display: flex;
   flex-wrap: wrap; }
 
-.user-suitcase-container h3 {
-  color: #fff; }
+.user-suitcase {
+  display: inline-block;
+  width: 205px;
+  height: 160px; }
+
+.user-suitcase-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .user-suitcase-container h3 {
+    color: #fff; }

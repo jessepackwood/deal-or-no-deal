@@ -19,9 +19,13 @@ export default class Gameboard extends Component {
       moneySlots: MoneyValues.slice(),
       userSuitcase: [],
       removedSlots: [],
-      bankerOffer: null
+      bankerOffer: null,
+      winnings: null
     }
   };
+
+  componentDidMount(){
+  }
 
   addUserSuitcase = (userSuitcase) => {
     console.log(userSuitcase)
@@ -47,7 +51,6 @@ export default class Gameboard extends Component {
       let removedSlot = this.state.moneySlots.filter( moneySlot => {
         return moneySlot === openedSuitcase.money;
       })
-
       this.updateSuitcaseNumbers(remainingCases);
       this.updateMoneySlots(removedSlot);
   }
@@ -106,12 +109,6 @@ export default class Gameboard extends Component {
     return valueArray
   };
 
-  generateBankerOffer = (caseValues) => {
-    let offer = (array) => array.reduce((a, b) => a + b) / array.length;
-    let bankerOffer =  Math.round(offer(caseValues));
-    console.log(bankerOffer)
-    this.setState({bankerOffer});
-  }
 
   checkAllSuitcases = () => {
     let cases = this.state.suitcases.length;
@@ -127,6 +124,30 @@ export default class Gameboard extends Component {
     }
   }
   
+  generateBankerOffer = (caseValues) => {
+    let offer = (array) => array.reduce((a, b) => a + b) / array.length;
+    let bankerOffer =  Math.round(offer(caseValues));
+    console.log(bankerOffer)
+    this.setState({bankerOffer});
+  }
+
+  acceptOffer = () => {
+    console.log('ACCEPT')
+    this.setState({winnings: this.state.bankerOffer})
+  }
+
+  declineOffer = () => {
+    console.log('NO DEAL')
+    this.setState({bankerOffer: null})
+  }
+
+  startOver = () => {
+    this.setState({suitcases: this.buildSuitcases()})
+    this.setState({userSuitcase: []})
+    this.setState({winnings: null})
+    this.setState({bankerOffer: null})
+    this.setState({removedSlots: []})
+  }
 
   render() {
 
@@ -157,6 +178,7 @@ export default class Gameboard extends Component {
 
     const userSuitcase = this.state.userSuitcase.map( (suitcase, index) => {
       return <Suitcase
+                className='user-suitcase'
                 number={suitcase.number}
                 key={index}
                 money={suitcase.money}
@@ -165,15 +187,23 @@ export default class Gameboard extends Component {
 
     return (
       <div className='game-board'>
-        <div className='offer-container'>
-          {this.state.bankerOffer}
-        </div>
-        <div className='suitcase-container'>
-          {mappedSuitcases}
-        </div>
-        <div className='money-slot-container'>
-          {mappedMoneyValues}
-        </div>
+        <section className='gameboard-wrapper'>
+          <div className='offer-container'>
+            <BankerOffer 
+              currentOffer={this.state.bankerOffer}
+              acceptOffer={this.acceptOffer}
+              declineOffer={this.declineOffer}
+              winnings={this.state.winnings}
+              startOver={this.startOver}
+            />
+          </div>
+          <div className='suitcase-container'>
+            {mappedSuitcases}
+          </div>
+          <div className='money-slot-container'>
+            {mappedMoneyValues}
+          </div>
+        </section>
         <div className='user-suitcase-container'>
           <h3>Your case</h3>
             {userSuitcase}

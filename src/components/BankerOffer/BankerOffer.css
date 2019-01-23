@@ -1,0 +1,40 @@
+.banker-offer {
+  position: absolute;
+  left: 40%;
+  background-color: black;
+  width: 250px;
+  height: 200px;
+  color: white; }
+
+.btn-deal {
+  background-color: gold;
+  width: 100px;
+  height: 50px; }
+
+.btn-no-deal {
+  background-color: red;
+  width: 100px;
+  height: 50px; }
+
+.winning {
+  position: absolute;
+  left: 35%;
+  height: 300px;
+  width: 500px;
+  background-color: gold; }
+
+.btn-start-over {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  background-color: black;
+  color: white; }
+
+.btn-wrapper {
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  margin: auto; }
+
+.current-offer {
+  margin: 20px; }
